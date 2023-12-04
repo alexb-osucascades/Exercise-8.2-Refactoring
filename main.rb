@@ -1,11 +1,24 @@
-class Poker
+class Game
+
+  def get_results()
+    raise "Not implemented"
+  end
+
+  def play()
+    raise "Not implemented"
+  end
+  
+end
+
+
+class Poker < Game
   def initialize(players)
     @players = players
     @hands = []
     players.length().times { |x| @hands.append(nil) }
   end
 
-  def play_poker()
+  def play()
     puts "Players in the poker game:"
     @players.length().times { |i| puts "#{self.get_player_name(i)}: #{self.get_player_hand(i)}" }
     # [pretend there's code here]
@@ -24,12 +37,12 @@ class Poker
   end
 end
 
-class Chess
+class Chess < Game
   def initialize(players)
     @players = players
   end
 
-  def play_game()
+  def play()
     puts "Players in the chess game:"
     @players.length().times { |x| puts "#{self.get_player_name(x)}: #{@players[x][1]}" }
     # [pretend there's code here]
@@ -53,7 +66,7 @@ class GoPlayer
   end
 end
 
-class Go
+class Go < Game
   def initialize(players)
     @players = []
     players.each { |x, y| @players.append(GoPlayer.new(x, y)) }
@@ -65,46 +78,23 @@ class Go
     # [pretend there's code here]
   end
 
-  def get_score()
+  def get_results()
     return "[pretend these are go results]"
   end
 end
 
-class PlayGames
 
-  def initialize(game_number, player_list)
-    @player_list = player_list
-    @game_number = game_number
-  end
 
-  def play()
-    case @game_number
-    when 1
-      poker = Poker.new(@player_list)
-      poker.play_poker()
-      puts poker.get_results()
-    when 2
-      chess = Chess.new(@player_list)
-      chess.play_game()
-      puts chess.get_results()
-    when 3
-      go = Go.new(@player_list)
-      go.play()
-      puts go.get_score()
-    end
-  end
+list_of_games = [
+  Go.new([["alice", "white"], ["bob", "black"]]),
+  Chess.new([["alice", "white"], ["bob", "black"]]), 
+  Poker.new(["alice", "bob", "chris", "dave"])
+]
+
+
+list_of_games.each do |game|
+  game.play()
+  puts
+  puts game.get_results()
 end
-
-pg = PlayGames.new(1, ["alice", "bob", "chris", "dave"])
-pg.play()
-
-puts
-
-pg = PlayGames.new(2, [["alice", "white"], ["bob", "black"]])
-pg.play()
-
-puts
-
-pg = PlayGames.new(3, [["alice", "white"], ["bob", "black"]])
-pg.play()
 
